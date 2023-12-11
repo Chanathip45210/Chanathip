@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+     
+    <style type="text/css">/* Chart.js */
+    /*
+     * DOM element rendering detection
+     * https://davidwalsh.name/detect-node-insertion
+     */
+    @keyframes chartjs-render-animation {
+      from { opacity: 0.99; }
+      to { opacity: 1; }
+    }
+    
+    .chartjs-render-monitor {
+      animation: chartjs-render-animation 0.001s;
+    }
+    
+    /*
+     * DOM element resizing detection
+     * https://github.com/marcj/css-element-queries
+     */
+    .chartjs-size-monitor,
+    .chartjs-size-monitor-expand,
+    .chartjs-size-monitor-shrink {
+      position: absolute;
+      direction: ltr;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+      pointer-events: none;
+      visibility: hidden;
+      z-index: -1;
+    }
+    
+    .chartjs-size-monitor-expand > div {
+      position: absolute;
+      width: 1000000px;
+      height: 1000000px;
+      left: 0;
+      top: 0;
+    }
+    
+    .chartjs-size-monitor-shrink > div {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      left: 0;
+      top: 0;
+    }
+    </style></head>
+        <body>
+          <div class="w3-top">
+            <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+              <a href="index.html" class="w3-bar-item w3-button"><b>Profile</b></a>
+              <!-- Float links to the right. Hide them on small screens -->
+              <div class="w3-right w3-hide-small">
+                <a href="index.html" class="w3-bar-item w3-button">index</a>
+                <a href="java.html" class="w3-bar-item w3-button">JavaScript</a>
+                <a href="api.html" class="w3-bar-item w3-button">Api</a>
+              </div>
+            </div>
+          </div>
+        
+        
+        <div class="box">
+          <h2 style="color: black;">Just change A - Z</h2>
+          <button onclick="generateRandomLetter()" class="w3-button w3-purple w3-section" fdprocessedid="t97v2p">คลิ๊ก</button>
+          <p id="result1"></p>
+        </div>
+        
+        
+        <div class="box">
+          <h2 style="color: black;">คำนวณความยาวเส้นรอบวงกลม </h2>
+          <input id="input" type="text" placeholder="ป้อนรัศมี" fdprocessedid="1pjfaa">
+          <button onclick="calculateAndDisplayCircumference()" class="w3-button w3-blue w3-section" fdprocessedid="kjvwr">ส่งคำตอบ</button>
+          <p>ความยาวเส้นรอบวง : <span id="result2" style="color: red;"></span></p>
+        </div>
+        
+        <div class="box">
+          <h2 style="color: black;">คำนวณวันต่อนาที  </h2>
+          <input type="text" id="daysInput" placeholder="กรอกจำนวนวัน" fdprocessedid="18bn4y">
+          <p><span id="show2"></span></p>
+          <button onclick="dayToSeconds()" class="w3-button w3-green w3-section" fdprocessedid="lql8j">ส่งคำตอบ</button>
+        </div>
+        
+        <div class="box">
+          <h2 style="color: black;">สุ่มเลขลูกเต๋า</h2>
+          <button onclick="rollAndDisplayDice()" class="w3-button w3-purple w3-section" fdprocessedid="q8ky6r">คลิ๊ก</button>
+          <p id="diceResult"></p>
+        </div>
+        
+        <div class="box">
+          <h2 style="color: black;">ดูเกรด </h2>
+          <input type="text" id="scoreInput" placeholder="กรอกคะแนนของคุณ" fdprocessedid="fs6hfm">
+          <button onclick="calculateGrade()" class="w3-button w3-red w3-section" fdprocessedid="x2r0o8">ส่งคำตอบ</button>
+          <p id="result3" style="color: black">เกรดของคุณคือ :</p>
+        </div>
+        
+        <div class="box">
+          <h2 style="color: black;">แปลงอุณหภูมิ</h2>
+            <input type="number" id="temperatureInput" placeholder="ป้อนอุณหภูมิ" step="0.1" fdprocessedid="m4gdo">
+            <button onclick="temperature()" class="w3-button w3-blue w3-section" fdprocessedid="hmmhnn">ส่งคำตอบ</button>
+            <p id="temperature">แปลงอุณหภูมิเป็นฟาเรนไฮต์ : </p>
+        </div>
+        
+        
+        <div class="w3-content w3-padding-100 w3-margin-top w3-center box"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div> 
+        <canvas id="myChart" style="width: 100%; max-width: 800px; display: block;" width="456" height="227" class="chartjs-render-monitor"></canvas> 
+        </div>
+        
+        <div class="w3-content w3-padding-100 w3-margin-top w3-center box"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+          <canvas id="barChart" style="width: 100%; max-width: 700px; display: block;" width="456" height="227" class="chartjs-render-monitor"></canvas>
+        </div>
+        
+        
+        
+        
+        <script>
+          function generateRandomLetter() {
+              const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+              const randomIndex = Math.floor(Math.random() * alphabet.length);
+              const randomLetter = alphabet[randomIndex];
+              document.getElementById('result1').textContent = `Random Letter: ${randomLetter}`;
+            }
+        
+        function calculateAndDisplayCircumference() {
+          let inputElement = document.getElementById("input");
+          let resultElement = document.getElementById("result2");
+        
+          let radius = parseFloat(inputElement.value);
+        
+          if (!isNaN(radius)) {
+            let circumference = calculateCircleCircumference(radius);
+            resultElement.textContent = circumference.toFixed(2);
+          } else {
+            resultElement.textContent = "กรุณาใส่ค่าที่ถูกต้อง";
+          }
+        } 
+        function calculateCircleCircumference(radius) {
+          return 2 * Math.PI * radius;
+        }
+        function dayToSeconds() {
+            let inputDays = document.getElementById("daysInput").value;
+            if (!isNaN(inputDays)) {
+                let seconds = inputDays * 86400;
+                document.getElementById("show2").innerText = `จำนวนวัน : ${inputDays} วัน, ${seconds} นาที`;
+            } else {
+                alert("โปรดป้อนจำนวนวันที่ถูกต้อง");
+            }
+        }
+        function rollDice() {
+            const randomNumber = Math.floor(Math.random() * 6) + 1;
+            return randomNumber;
+          }
+        
+          function rollAndDisplayDice() {
+            const result = rollDice();
+            document.getElementById("diceResult").innerHTML = `Dice roll results : ${result}`;
+        }
+        function calculateGrade() {
+                    var score = parseFloat(document.getElementById("scoreInput").value);
+                    var grade = (score >= 80) ? "A" : (score >= 70) ? "B" : (score >= 60) ? "C" : (score >= 50) ? "D" : "F";
+                    document.getElementById("result3").innerHTML = "เกรดของคุณคือ : " + grade;
+        }
+        
+        function temperature() {
+                        const temperatureInput = document.getElementById('temperatureInput').value;
+                        if (!isNaN(temperatureInput)) {
+                            const temperatureFahrenheit = (temperatureInput * 9 / 5) + 32;
+                            document.getElementById('temperature').innerHTML = `อุณหภูมิแปลงเป็นฟาเรนไฮต์ : ${temperatureFahrenheit.toFixed(2)} °F`;
+                        } else {
+                            document.getElementById('temperature').innerHTML = 'กรุณาใส่อุณหภูมิที่ถูกต้อง';
+                        }
+                    }
+                
+            
+        </script>
+        
+        
+        <script>
+        const xyValues = [
+          {x:50, y:7},
+          {x:60, y:8},
+          {x:70, y:8},
+          {x:80, y:9},
+          {x:90, y:9},
+          {x:100, y:9},
+          {x:110, y:10},
+          {x:120, y:11},
+          {x:130, y:14},
+          {x:140, y:14},
+          {x:150, y:15}
+        ];
+        
+        new Chart("myChart", {
+          type: "scatter",
+          data: {
+            datasets: [{
+              pointRadius: 4,
+              pointBackgroundColor: "rgb(0,0,255)",
+              data: xyValues
+            }]
+          },
+          options: {
+            legend: {display: false},
+            scales: {
+              xAxes: [{ticks: {min: 40, max:160}}],
+              yAxes: [{ticks: {min: 6, max:16}}],
+            }
+          }
+        });
+        </script>
+        
+        <script>
+          const xValues = [100,200,300,400,500,600,700,800,900,1000];
+        
+        new Chart("barChart", {
+          type: "line",
+          data: {
+            labels: xValues,
+            datasets: [{
+              data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+              borderColor: "red",
+              fill: false
+            },{
+              data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+              borderColor: "green",
+              fill: false
+            },{
+              data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
+              borderColor: "blue",
+              fill: false
+            }]
+          },
+          options: {
+            legend: {display: false}
+          }
+        });
+          </script>
+        
+        
+        </body>
+
+
+</html>
